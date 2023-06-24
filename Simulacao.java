@@ -13,7 +13,8 @@ public class Simulacao {
         mapa = new Mapa();
         int largura = mapa.getLargura();
         int altura = mapa.getAltura();
-        cliente = new Cliente(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Cria um cliente em uma posicao aleatoria
+        Random randCli = new Random();
+        cliente = new Cliente("Jozé Maria", 6666666, randCli.nextInt(8), new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Cria um cliente em uma posicao aleatoria
         cliente.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Define a posicao destino aleatoriamente
         mapa.adicionarItem(cliente);//Inicializando o mapa com o veículo
         janelaSimulacao = new JanelaSimulacao(mapa);

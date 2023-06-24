@@ -5,7 +5,7 @@
  * @author Ana Clara
  * @version 1.0
  */
-public class Pessoa {
+public abstract class Pessoa {
     private String nome;
     
     /**
@@ -25,5 +25,10 @@ public class Pessoa {
      */
     public String getNome() {
         return nome;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n:Nome: " + nome;
     }
 }

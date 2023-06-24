@@ -6,9 +6,9 @@ import javax.swing.ImageIcon;
  * Representa os clientes da simulacao.
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann and Pedro Ernesto
  */
-public class Cliente {
+public class Cliente extends Pessoa{
 
-    public static Random rand = new Random(9);
+    public static Random rand;
     private int duracaoAtendimento;
     private int tempoChegada;
     private ContaBancaria conta;
@@ -16,9 +16,9 @@ public class Cliente {
     private Localizacao localizacaoDestino;
     private Image imagem;
 
-    public Cliente(String nome, int tempoChegada, ContaBancaria conta, Localizacao localizacao) {
+    public Cliente(String nome, int tempoChegada, int numeroConta, Localizacao localizacao) {
         super(nome);
-        duracaoAtendimento = rand;
+        conta = new ContaBancaria(numeroConta);
         this.tempoChegada = tempoChegada;
         this.localizacaoAtual = localizacao;
         localizacaoDestino = null;
@@ -52,12 +52,15 @@ public class Cliente {
             setLocalizacaoAtual(proximaLocalizacao);
         }
     } 
-
-    public int getDuracao(){
+    public int getDuracaoAtendimento(){
         return duracaoAtendimento;
     }
 
     public int getTempoChegada(){
         return tempoChegada;
+    }
+    @Override
+    public String toString() {
+        return super.toString() + "\n:Numero conta " + conta.getNumero() + "\nSaldo: "+ conta.getSaldo();
     }
 }

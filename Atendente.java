@@ -19,7 +19,7 @@ public class Atendente extends Pessoa{
      * @param Cliente cliente a ser atendido.
      */
     public void atenderCliente(Cliente cliente) {
-        System.out.println("Atendente " + getNome() + " está atendendo o cliente " + cliente.getNome());
+        System.out.println("Atendente: " + getNome() + ", está atendendo o cliente: " + cliente.getNome());
         horarioLivre = horarioLivre + cliente.getDuracaoAtendimento();
     }
 
@@ -29,5 +29,10 @@ public class Atendente extends Pessoa{
      */
     public boolean estaLivre(int tempoAtual) {
         return tempoAtual >= horarioLivre;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Proximo horário: " + horarioLivre;
     }
 }
