@@ -7,18 +7,15 @@
  */
 public class Pessoa {
     private String nome;
-    private int codigo;
     
     /**
      * Construtor da classe Pessoa.
      * Cria uma nova instância de Pessoa com o nome e o código fornecidos.
      * 
      * @param nome O nome da pessoa.
-     * @param codigo O código da pessoa.
      */
-    public Pessoa(String nome, int codigo) {
+    public Pessoa(String nome) {
         this.nome = nome;
-        this.codigo = codigo;
     }
     
     /**
@@ -28,14 +25,5 @@ public class Pessoa {
      */
     public String getNome() {
         return nome;
-    }
-    
-    /**
-     * Retorna o código da pessoa.
-     * 
-     * @return O código da pessoa.
-     */
-    public int getCodigo() {
-        return codigo;
     }
 }
