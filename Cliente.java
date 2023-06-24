@@ -1,16 +1,25 @@
+import java.util.Random;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
  * Representa os clientes da simulacao.
- * @author David J. Barnes and Michael Kolling and Luiz Merschmann
+ * @author David J. Barnes and Michael Kolling and Luiz Merschmann and Pedro Ernesto
  */
 public class Cliente {
+
+    public static Random rand = new Random(9);
+    private int duracaoAtendimento;
+    private int tempoChegada;
+    private ContaBancaria conta;
     private Localizacao localizacaoAtual;
     private Localizacao localizacaoDestino;
     private Image imagem;
 
-    public Cliente(Localizacao localizacao) {
+    public Cliente(String nome, int tempoChegada, ContaBancaria conta, Localizacao localizacao) {
+        super(nome);
+        duracaoAtendimento = rand;
+        this.tempoChegada = tempoChegada;
         this.localizacaoAtual = localizacao;
         localizacaoDestino = null;
         imagem = new ImageIcon(getClass().getResource("Imagens/cliente.png")).getImage();
@@ -43,4 +52,12 @@ public class Cliente {
             setLocalizacaoAtual(proximaLocalizacao);
         }
     } 
+
+    public int getDuracao(){
+        return duracaoAtendimento;
+    }
+
+    public int getTempoChegada(){
+        return tempoChegada;
+    }
 }
