@@ -25,37 +25,66 @@ public class Cliente extends Pessoa{
         imagem = new ImageIcon(getClass().getResource("Imagens/cliente.png")).getImage();
     }
 
+    /**
+     * 
+     * @return Localizacao: localizacao em que o objeto se encontra no mapa
+     *  
+     */
     public Localizacao getLocalizacaoAtual() {
         return localizacaoAtual;
     }
 
+    /**
+     * 
+     * @return Localizacao: localizacao para qual o objeto irá no mapa
+     *  
+     */
     public Localizacao getLocalizacaoDestino() {
         return localizacaoDestino;
     }
     
+    /**
+     * 
+     * @return Image: Pega a imagem relaionada ao objeto
+     *  
+     */
     public Image getImagem(){
         return imagem;
     }
 
+    /**
+     * @param Localizacao Seta a localizacao em que o objeto se encontra
+     *  
+     */
     public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
         this.localizacaoAtual = localizacaoAtual;
     }
-
+    /**
+     * @param Localizacao Seta a localizacao para qual o objeto irá no mapa
+     *  
+     */
     public void setLocalizacaoDestino(Localizacao localizacaoDestino) {
         this.localizacaoDestino = localizacaoDestino;
     }
-    
-    public void executarAcao(){
+    /**
+     * Move o cliente para a proxima localizacao
+     */
+    public void mover(){
         Localizacao destino = getLocalizacaoDestino();
         if(destino != null){
             Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(localizacaoDestino);
             setLocalizacaoAtual(proximaLocalizacao);
         }
     } 
+    /**
+     * @return int Tempo que durara o atendimento daquele cliente
+     */
     public int getDuracaoAtendimento(){
         return duracaoAtendimento;
     }
-
+    /**
+     * @return int Tempo em que o cliente chegou
+     */
     public int getTempoChegada(){
         return tempoChegada;
     }

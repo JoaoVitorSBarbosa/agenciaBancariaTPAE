@@ -30,7 +30,7 @@ public class Simulacao {
 
     private void executarUmPasso() {
         mapa.removerItem(cliente);
-        cliente.executarAcao();
+        cliente.mover();
         mapa.adicionarItem(cliente);
         janelaSimulacao.executarAcao();
     }
