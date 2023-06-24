@@ -2,18 +2,18 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
- * Representa os veiculos da simulacao.
+ * Representa os clientes da simulacao.
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
-public class Veiculo {
+public class Cliente {
     private Localizacao localizacaoAtual;
     private Localizacao localizacaoDestino;
     private Image imagem;
 
-    public Veiculo(Localizacao localizacao) {
+    public Cliente(Localizacao localizacao) {
         this.localizacaoAtual = localizacao;
         localizacaoDestino = null;
-        imagem = new ImageIcon(getClass().getResource("Imagens/veiculo.png")).getImage();
+        imagem = new ImageIcon(getClass().getResource("Imagens/cliente.png")).getImage();
     }
 
     public Localizacao getLocalizacaoAtual() {
