@@ -17,6 +17,11 @@ public class ContaBancaria {
      */
     public ContaBancaria(int numero) {
         this.numero = numero;
+        saldo = 0;
+    }
+    public ContaBancaria(int numero, int saldo){
+        this.numero = numero;
+        this.saldo = saldo;
     }
     
     /**
