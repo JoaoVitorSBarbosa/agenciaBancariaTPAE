@@ -1,6 +1,6 @@
 /**
  * Representa um mapa com todos os itens que participam da simulacao
- * @author David J. Barnes, Michael Kolling, Luiz Merschmann and João Barbosa
+ * @author David J. Barnes, Michael Kolling, Luiz Merschmann, Pedro Ernesto and João Barbosa
  */
 public class Mapa {
     private Item[][] itens;
@@ -18,7 +18,7 @@ public class Mapa {
     public Mapa(int largura, int altura) {
         this.largura = largura;
         this.altura = altura;
-        itens = new Cliente[altura][largura];
+        itens = new Item[altura][largura];
     }
     /**
      * Cria mapa com tamanho padrao.
@@ -27,17 +27,17 @@ public class Mapa {
         this(LARGURA_PADRAO,ALTURA_PADRAO);
     }
     
-    public void adicionarItem(Cliente cliente){
-        itens[cliente.getLocalizacaoAtual().getX()][cliente.getLocalizacaoAtual().getY()] = cliente;
+    public void adicionarItem(Item item){
+        itens[item.getLocalizacaoAtual().getX()][item.getLocalizacaoAtual().getY()] = item;
     }
     
-    public void removerItem(Cliente cliente){
-        itens[cliente.getLocalizacaoAtual().getX()][cliente.getLocalizacaoAtual().getY()] = null;
+    public void removerItem(Item item){
+        itens[item.getLocalizacaoAtual().getX()][item.getLocalizacaoAtual().getY()] = null;
     }
     
-    public void atualizarMapa(Cliente cliente){
-        removerItem(cliente);
-        adicionarItem(cliente);
+    public void atualizarMapa(Item item){
+        removerItem(item);
+        adicionarItem(item);
     }
     
     public Item getItem(int x, int y){
