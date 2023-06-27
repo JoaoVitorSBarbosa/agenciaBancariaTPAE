@@ -12,28 +12,14 @@ public class Cliente extends Pessoa{
     private int duracaoAtendimento;
     private int tempoChegada;
     private ContaBancaria conta;
-    private Localizacao localizacaoAtual;
     private Localizacao localizacaoDestino;
-    private Image imagem;
 
-    public Cliente(String nome, int tempoChegada, int numeroConta, Localizacao localizacao) {
-        super(nome);
+    public Cliente(Localizacao localizacao, String nome, int tempoChegada, int numeroConta) {
+        super("cliente", localizacao, nome);
         conta = new ContaBancaria(numeroConta);
         this.tempoChegada = tempoChegada;
-        this.localizacaoAtual = localizacao;
         localizacaoDestino = null;
-        imagem = new ImageIcon(getClass().getResource("Imagens/cliente.png")).getImage();
     }
-
-    /**
-     * 
-     * @return Localizacao: localizacao em que o objeto se encontra no mapa
-     *  
-     */
-    public Localizacao getLocalizacaoAtual() {
-        return localizacaoAtual;
-    }
-
     /**
      * 
      * @return Localizacao: localizacao para qual o objeto irá no mapa
@@ -41,23 +27,6 @@ public class Cliente extends Pessoa{
      */
     public Localizacao getLocalizacaoDestino() {
         return localizacaoDestino;
-    }
-    
-    /**
-     * 
-     * @return Image: Pega a imagem relaionada ao objeto
-     *  
-     */
-    public Image getImagem(){
-        return imagem;
-    }
-
-    /**
-     * @param Localizacao Seta a localizacao em que o objeto se encontra
-     *  
-     */
-    public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
-        this.localizacaoAtual = localizacaoAtual;
     }
     /**
      * @param Localizacao Seta a localizacao para qual o objeto irá no mapa

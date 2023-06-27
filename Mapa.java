@@ -3,7 +3,7 @@
  * @author David J. Barnes, Michael Kolling, Luiz Merschmann and João Barbosa
  */
 public class Mapa {
-    private Cliente[][] itens;
+    private Item[][] itens;
     private int largura;
     private int altura;
     

@@ -9,8 +9,8 @@ public class Atendente extends Pessoa{
      * @param String nome: Nome do atendente.
      * @param int horarioAtual: horario em que a simulação se encontra ao criar o objeto.
      */
-    public Atendente(String nome, int horarioAtual) {
-        super(nome);
+    public Atendente(Localizacao localizacao, String nome, int horarioAtual) {
+        super("atendente", localizacao, nome);
         horarioLivre = horarioAtual;
     }
 
