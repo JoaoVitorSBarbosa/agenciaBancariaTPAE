@@ -5,7 +5,7 @@
  * @author Ana Clara
  * @version 1.0
  */
-public abstract class Pessoa {
+public abstract class Pessoa extends Item{
     private String nome;
     
     /**
@@ -14,7 +14,8 @@ public abstract class Pessoa {
      * 
      * @param nome O nome da pessoa.
      */
-    public Pessoa(String nome) {
+    public Pessoa(String descricao, Localizacao localizacao, String nome) {
+        super(descricao, localizacao);
         this.nome = nome;
     }
     
@@ -29,6 +30,6 @@ public abstract class Pessoa {
 
     @Override
     public String toString() {
-        return super.toString() + "\n:Nome: " + nome;
+        return super.toString() + "Nome: " + nome;
     }
 }
