@@ -1,6 +1,4 @@
 import java.util.Random;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 
 /**
  * Representa os clientes da simulacao.
