@@ -40,7 +40,7 @@ public class Mapa {
         adicionarItem(cliente);
     }
     
-    public Cliente getItem(int x, int y){
+    public Item getItem(int x, int y){
         return itens[x][y];
     }
 

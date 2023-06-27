@@ -24,7 +24,6 @@ public class Simulacao {
     private Queue<Cliente> filaCliente;
     private ArrayList<Atendente> listaAtendentes;
     private Random rand;
-    private Cliente cliente;
 
     /**
      * Construtor da classe Simulacao.
@@ -43,9 +42,8 @@ public class Simulacao {
     }
 
     private void gerarFilaClientes(int numeroClientes) {
-        for (int i = 0; i < 1; i++) {
-            cliente = new Cliente("Jozé Maria", 6666666, rand.nextInt(8),
-                    new Localizacao(0, 0));
+        for (int i = 0; i < numeroClientes; i++) {
+            Cliente cliente = new Cliente(new Localizacao(1, 34 - i), "Jozé Maria", i, rand.nextInt(8));
             cliente.setLocalizacaoDestino(
                     new Localizacao(rand.nextInt(mapa.getLargura()), rand.nextInt(mapa.getAltura())));
             filaCliente.add(cliente);
@@ -55,7 +53,7 @@ public class Simulacao {
 
     private void criarAtendentes(int numeroAtendentes) {
         for (int i = 0; i < numeroAtendentes; i++) {
-            listaAtendentes.add(new Atendente("Ana", 0));
+            listaAtendentes.add(new Atendente(new Localizacao(5, (i * 5) + 5), "Ana", 0));
         }
     }
 
@@ -66,20 +64,20 @@ public class Simulacao {
      */
     public void executarSimulacao(int numPassos) {
         janelaSimulacao.executarAcao();
-        if (filaCliente.peek() != null) {
-            cliente = filaCliente.remove();
-            for (int i = 0; i < numPassos; i++) {
-                executarUmPasso();
-                esperar(100);
-            }
+        for (int i = 0; i < numPassos; i++) {
+            executarUmPasso();
+            esperar(100);
         }
     }
 
     private void executarUmPasso() {
-        mapa.removerItem(cliente);
-        cliente.mover();
-        mapa.adicionarItem(cliente);
-        janelaSimulacao.executarAcao();
+        if (filaCliente.peek() != null) {
+            Cliente cliente = filaCliente.remove();
+            mapa.removerItem(cliente);
+            cliente.mover();
+            mapa.adicionarItem(cliente);
+            janelaSimulacao.executarAcao();
+        }
     }
 
     private void esperar(int milisegundos) {
