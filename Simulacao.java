@@ -22,15 +22,16 @@ public class Simulacao {
     private JanelaSimulacao janelaSimulacao;
     private Mapa mapa;
     private Queue<Cliente> filaCliente;
-    private ArrayList<Atendente> listaAtendentes;
+    private List<Atendente> listaAtendentes;
     private Random rand;
 
     /**
      * Construtor da classe Simulacao.
-     * Inicializa a simulação e configura os elementos necessários.
+     *
+     * @param numeroClientes   o número de clientes a serem gerados na simulação
+     * @param numeroAtendentes o número de atendentes a serem criados na simulação
      */
     public Simulacao(int numeroClientes, int numeroAtendentes) {
-
         rand = new Random();
         mapa = new Mapa();
         filaCliente = new LinkedList<>();
@@ -41,6 +42,11 @@ public class Simulacao {
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
 
+    /**
+     * Gera a fila de clientes para a simulação.
+     *
+     * @param numeroClientes o número de clientes a serem gerados
+     */
     private void gerarFilaClientes(int numeroClientes) {
         for (int i = 0; i < numeroClientes; i++) {
             Cliente cliente = new Cliente(new Localizacao(1, 34 - i), "Jozé Maria", i, rand.nextInt(8));
@@ -51,6 +57,11 @@ public class Simulacao {
         }
     }
 
+    /**
+     * Cria os atendentes para a simulação.
+     *
+     * @param numeroAtendentes o número de atendentes a serem criados
+     */
     private void criarAtendentes(int numeroAtendentes) {
         for (int i = 0; i < numeroAtendentes; i++) {
             listaAtendentes.add(new Atendente(new Localizacao(5, (i * 5) + 5), "Ana", 0));
@@ -59,20 +70,24 @@ public class Simulacao {
 
     /**
      * Executa a simulação por um número específico de passos.
-     * 
-     * @param numPassos O número de passos da simulação a serem executados.
+     *
+     * @param numeroPassos o número de passos a serem executados na simulação
      */
-    public void executarSimulacao(int numPassos) {
+    public void executarSimulacao(int numeroPassos) {
         janelaSimulacao.executarAcao();
-        for (int i = 0; i < numPassos; i++) {
+        for (int i = 0; i < numeroPassos; i++) {
             executarUmPasso();
             esperar(100);
         }
     }
 
+    /**
+     * Executa um único passo da simulação.
+     * Move o próximo cliente na fila e atualiza o mapa.
+     */
     private void executarUmPasso() {
-        if (filaCliente.peek() != null) {
-            Cliente cliente = filaCliente.remove();
+        if (!filaCliente.isEmpty()) {
+            Cliente cliente = filaCliente.poll();
             mapa.removerItem(cliente);
             cliente.mover();
             mapa.adicionarItem(cliente);
@@ -80,6 +95,11 @@ public class Simulacao {
         }
     }
 
+    /**
+     * Espera um número de milissegundos especificado.
+     *
+     * @param milisegundos o número de milissegundos a serem esperados
+     */
     private void esperar(int milisegundos) {
         try {
             Thread.sleep(milisegundos);
