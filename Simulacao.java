@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
@@ -12,10 +13,6 @@ import java.util.Random;
  * Luiz Merschmann, João Barbosa e Ana Clara.
  * 
  * @author David J. Barnes
- * @author Michael Kolling
- * @author Luiz Merschmann
- * @author João Barbosa
- * @author Ana Clara
  * @version 2.0
  */
 public class Simulacao {
@@ -24,6 +21,14 @@ public class Simulacao {
     private Queue<Cliente> filaCliente;
     private List<Atendente> listaAtendentes;
     private Random rand;
+
+    private static String[] nomesClientes = {
+        "Ana",
+        "Pedro",
+        "Joao",
+        "Luiz",
+        "Maria"
+    };
 
     /**
      * Construtor da classe Simulacao.
@@ -49,12 +54,22 @@ public class Simulacao {
      */
     private void gerarFilaClientes(int numeroClientes) {
         for (int i = 0; i < numeroClientes; i++) {
-            Cliente cliente = new Cliente(new Localizacao(1, 34 - i), "Jozé Maria", i, rand.nextInt(8));
+            Cliente cliente = new Cliente(new Localizacao(1, 34 - i), getRandomName(), i, rand.nextInt(8));
             cliente.setLocalizacaoDestino(
                     new Localizacao(rand.nextInt(mapa.getLargura()), rand.nextInt(mapa.getAltura())));
             filaCliente.add(cliente);
             mapa.adicionarItem(cliente);
         }
+    }
+
+    /**
+     * Obtém um nome de cliente aleatório da matriz de nomes de clientes.
+     * 
+     * @return um nome de cliente aleatório.
+     */
+    private String getRandomName() {
+        int randomIndex = rand.nextInt(nomesClientes.length);
+        return nomesClientes[randomIndex];
     }
 
     /**
