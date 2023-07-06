@@ -54,11 +54,10 @@ public class Simulacao {
      */
     private void gerarFilaClientes(int numeroClientes) {
         for (int i = 0; i < numeroClientes; i++) {
-            Cliente cliente = new Cliente(new Localizacao(1, 34 - i), getRandomName(), i, rand.nextInt(8));
+            Cliente cliente = new Cliente(new Localizacao(1, 34 - i), getRandomName(), i, rand.nextInt(i));
             cliente.setLocalizacaoDestino(
                     new Localizacao(rand.nextInt(mapa.getLargura()), rand.nextInt(mapa.getAltura())));
             filaCliente.add(cliente);
-            mapa.adicionarItem(cliente);
         }
     }
 
