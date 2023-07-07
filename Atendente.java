@@ -1,14 +1,19 @@
 /**
  * Classe que representa um atendente.
- * @author João Vitor e Ana Clara
+ * 
+ * @author João Vitor
+ * @author Ana Clara
  */
-public class Atendente extends Pessoa{
+public class Atendente extends Pessoa {
     private int horarioLivre;
     private Cliente clienteAtual;
+
     /**
      * Construtor da classe Atendente.
-     * @param String nome: Nome do atendente.
-     * @param int horarioAtual: horario em que a simulação se encontra ao criar o objeto.
+     * 
+     * @param localizacao a localização do atendente
+     * @param nome o nome do atendente
+     * @param horarioAtual o horário em que a simulação se encontra ao criar o objeto
      */
     public Atendente(Localizacao localizacao, String nome, int horarioAtual) {
         super("atendente", localizacao, nome);
@@ -16,17 +21,20 @@ public class Atendente extends Pessoa{
     }
 
     /**
-     * Realiza o atendimento de um cliente setando um valor para quando o atendente em questão estará livre.
-     * @param Cliente cliente a ser atendido.
+     * Realiza o atendimento de um cliente, definindo o horário em que o atendente estará livre.
+     * 
+     * @param cliente o cliente a ser atendido
      */
     public void atenderCliente(Cliente cliente) {
-        System.out.println("Atendente: " + getNome() + ", está atendendo o cliente: " + cliente.getNome());
-        horarioLivre = horarioLivre + cliente.getDuracaoAtendimento();
+        System.out.println("Atendente: " + getNome() + " está atendendo o cliente: " + cliente.getNome());
+        horarioLivre += cliente.getDuracaoAtendimento();
     }
 
     /**
-     * @param int tempoAtual, tempo em atual da simulação
-     * @return boolean true se esta livre, false se está ocupado
+     * Verifica se o atendente está livre em um determinado tempo.
+     * 
+     * @param tempoAtual o tempo atual da simulação
+     * @return true se o atendente está livre, false caso contrário
      */
     public boolean estaLivre(int tempoAtual) {
         return tempoAtual >= horarioLivre;
@@ -34,13 +42,23 @@ public class Atendente extends Pessoa{
 
     @Override
     public String toString() {
-        return super.toString() + "Proximo horário: " + horarioLivre;
+        return super.toString() + " Próximo horário: " + horarioLivre;
     }
 
+    /**
+     * Obtém o cliente atualmente sendo atendido pelo atendente.
+     * 
+     * @return o cliente atual
+     */
     public Cliente getCliente() {
         return clienteAtual;
     }
-    
+
+    /**
+     * Define o cliente a ser atendido pelo atendente.
+     * 
+     * @param clienteAtual o cliente atual
+     */
     public void setCliente(Cliente clienteAtual) {
         this.clienteAtual = clienteAtual;
     }
