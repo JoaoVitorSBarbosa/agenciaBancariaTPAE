@@ -8,8 +8,7 @@ import java.util.Random;
  * Responsável pela simulação.
  * Descrição detalhada da classe e suas funcionalidades.
  * 
- * Este código é baseado em um trabalho anterior de David J. Barnes, Michael
- * Kolling,
+ * Este código é baseado em um trabalho anterior de David J. Barnes, Michael Kolling,
  * Luiz Merschmann, João Barbosa e Ana Clara.
  * 
  * @author David J. Barnes
