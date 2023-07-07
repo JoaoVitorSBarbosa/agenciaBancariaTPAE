@@ -54,10 +54,11 @@ public class Simulacao {
      */
     private void gerarFilaClientes(int numeroClientes) {
         for (int i = 0; i < numeroClientes; i++) {
-            Cliente cliente = new Cliente(new Localizacao(1, 34 - i), getRandomName(), i, rand.nextInt(i));
+            Cliente cliente = new Cliente(new Localizacao(1, 25 + i), getRandomName(), i, rand.nextInt(8));
             cliente.setLocalizacaoDestino(
                     new Localizacao(rand.nextInt(mapa.getLargura()), rand.nextInt(mapa.getAltura())));
             filaCliente.add(cliente);
+            mapa.adicionarItem(cliente);
         }
     }
 
@@ -78,7 +79,8 @@ public class Simulacao {
      */
     private void criarAtendentes(int numeroAtendentes) {
         for (int i = 0; i < numeroAtendentes; i++) {
-            listaAtendentes.add(new Atendente(new Localizacao(5, (i * 5) + 5), "Ana", 0));
+            listaAtendentes.add(new Atendente(new Localizacao( (i * 5) + 5, 5), "Ana", 0));
+            mapa.adicionarItem(listaAtendentes.get(i));
         }
     }
 
@@ -89,10 +91,10 @@ public class Simulacao {
      */
     public void executarSimulacao(int numeroPassos) {
         janelaSimulacao.executarAcao();
-        for (int i = 0; i < numeroPassos; i++) {
-            executarUmPasso();
+        do {
             esperar(100);
-        }
+            executarUmPasso();
+        } while (listaAtendentes.stream().anyMatch(at -> at.getCliente() != null));
     }
 
     /**
@@ -100,12 +102,30 @@ public class Simulacao {
      * Move o próximo cliente na fila e atualiza o mapa.
      */
     private void executarUmPasso() {
-        if (!filaCliente.isEmpty()) {
-            Cliente cliente = filaCliente.poll();
-            mapa.removerItem(cliente);
-            cliente.mover();
-            mapa.adicionarItem(cliente);
-            janelaSimulacao.executarAcao();
+        
+        for (Atendente at: listaAtendentes) {
+            if (at.getCliente() == null) {
+                if (!filaCliente.isEmpty()) {
+                    Cliente cliente = filaCliente.poll();
+                    cliente.setLocalizacaoDestino(at.getLocalizacaoAtual());
+                    at.setCliente(cliente);
+                    mapa.removerItem(cliente);
+                    cliente.mover();
+                    mapa.adicionarItem(cliente);
+                    janelaSimulacao.executarAcao();
+                }
+            } else {
+                Cliente cliente = at.getCliente();
+                mapa.removerItem(cliente);
+                cliente.mover();
+                mapa.adicionarItem(cliente);
+                if (cliente.getLocalizacaoAtual().equals(cliente.getLocalizacaoDestino())) {
+                    mapa.removerItem(cliente);
+                    mapa.adicionarItem(at);
+                    at.setCliente(null);
+                }
+                janelaSimulacao.executarAcao();
+            }
         }
     }
 
