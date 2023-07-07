@@ -4,6 +4,7 @@
  */
 public class Atendente extends Pessoa{
     private int horarioLivre;
+    private Cliente clienteAtual;
     /**
      * Construtor da classe Atendente.
      * @param String nome: Nome do atendente.
@@ -34,5 +35,13 @@ public class Atendente extends Pessoa{
     @Override
     public String toString() {
         return super.toString() + "Proximo horário: " + horarioLivre;
+    }
+
+    public Cliente getCliente() {
+        return clienteAtual;
+    }
+    
+    public void setCliente(Cliente clienteAtual) {
+        this.clienteAtual = clienteAtual;
     }
 }
