@@ -9,12 +9,14 @@ import java.util.Random;
  * Descrição detalhada da classe e suas funcionalidades.
  * 
  * Este código é baseado em um trabalho anterior de David J. Barnes, Michael Kolling,
- * Luiz Merschmann, João Barbosa e Ana Clara.
+ * Luiz Merschmann, João Barbosa, Pedro Ernesto e Ana Clara.
  * 
  * @author David J. Barnes
  * @version 2.0
  */
 public class Simulacao {
+    private static Simulacao singleTon;
+
     private JanelaSimulacao janelaSimulacao;
     private Mapa mapa;
     private Queue<Cliente> filaCliente;
@@ -35,7 +37,7 @@ public class Simulacao {
      * @param numeroClientes   o número de clientes a serem gerados na simulação
      * @param numeroAtendentes o número de atendentes a serem criados na simulação
      */
-    public Simulacao(int numeroClientes, int numeroAtendentes) {
+    private Simulacao(int numeroClientes, int numeroAtendentes) {
         rand = new Random();
         mapa = new Mapa();
         filaCliente = new LinkedList<>();
@@ -44,6 +46,16 @@ public class Simulacao {
         gerarFilaClientes(numeroClientes);
 
         janelaSimulacao = new JanelaSimulacao(mapa);
+    }
+
+    /**
+     * Método que retorna a instância única garantida pelo padrão de projeto Singleton
+     * 
+     * @param numeroClientes
+     * @param numeroAtendentes
+     */
+    public static Simulacao getInstanceSimulacao(int numeroClientes, int numeroAtendentes){
+        return (singleTon==null) ? new Simulacao(numeroClientes, numeroAtendentes) : singleTon;
     }
 
     /**
