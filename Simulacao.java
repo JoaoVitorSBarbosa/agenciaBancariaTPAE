@@ -87,8 +87,7 @@ public class Simulacao {
     private void gerarFilaClientes(int numeroClientes) {
         for (int i = 0; i < numeroClientes; i++) {
             Cliente cliente = new Cliente(new Localizacao((6+i)-(i/20)*20, 20+(i/20)), getRandomName(), i, rand.nextInt(8)); // gera fila S
-            cliente.setLocalizacaoDestino(
-                new Localizacao(rand.nextInt(mapa.getLargura()), rand.nextInt(mapa.getAltura())));
+            cliente.setLocalizacaoDestino(null);
             filaCliente.add(cliente);
             mapa.adicionarItem(cliente);
         }
@@ -133,22 +132,23 @@ public class Simulacao {
      * Move o próximo cliente na fila e atualiza o mapa.
      */
     private void executarUmPasso() {
-        
+        Cliente cliente;
         for (Atendente at: listaAtendentes) {
-            if (at.getCliente() == null) {
+            if (at.getCliente()==null) {
                 if (!filaCliente.isEmpty()) {
-                    Cliente cliente = filaCliente.poll();
+                    cliente = filaCliente.poll();
+
+                    cliente.setLocalizacaoDestino(new Localizacao(cliente.getLocalizacaoAtual().getX(),cliente.getLocalizacaoAtual().getY()-1));
+                    attSim(cliente);
+                    janelaSimulacao.executarAcao();
+
                     cliente.setLocalizacaoDestino(new Localizacao(at.getLocalizacaoAtual().getX(),at.getLocalizacaoAtual().getY()+1));
                     at.setCliente(cliente);
-                    mapa.removerItem(cliente);
-                    cliente.mover();
-                    mapa.adicionarItem(cliente);
+                    attSim(cliente);
                 }
             } else {
-                Cliente cliente = at.getCliente();
-                mapa.removerItem(cliente);
-                cliente.mover();
-                mapa.adicionarItem(cliente);
+                cliente = at.getCliente();
+                attSim(cliente);
                 if (cliente.getLocalizacaoAtual().equals(cliente.getLocalizacaoDestino()) && !at.estaAtendendo()) {
                     at.atenderCliente(cliente);
                 } else if (at.estaAtendendo()) {
@@ -164,6 +164,16 @@ public class Simulacao {
             mapa.adicionarItem(c);
         }
         janelaSimulacao.executarAcao();
+    }
+
+    /**
+     * Atualiza a simulacao com o movimento do cliente
+     * @param cliente
+     */
+    private void attSim(Cliente cliente){
+        mapa.removerItem(cliente);
+        cliente.mover();
+        mapa.adicionarItem(cliente);
     }
 
     /**

@@ -17,6 +17,8 @@ public class Cliente extends Pessoa{
         conta = new ContaBancaria(numeroConta);
         this.tempoChegada = tempoChegada;
         localizacaoDestino = null;
+        rand = new Random();
+        duracaoAtendimento = rand.nextInt(50,80);
     }
     /**
      * 

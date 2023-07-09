@@ -19,6 +19,7 @@ public class Atendente extends Pessoa {
     public Atendente(Localizacao localizacao, String nome, int horarioAtual) {
         super("atendente", localizacao, nome);
         horarioLivre = horarioAtual;
+        atendendo = false;
     }
 
     /**
