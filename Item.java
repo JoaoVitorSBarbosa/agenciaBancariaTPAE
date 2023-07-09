@@ -18,18 +18,14 @@ public class Item {
     }
 
     /**
-     * 
      * @return Localizacao: localizacao em que o objeto se encontra no mapa
-     *  
      */
     public Localizacao getLocalizacaoAtual() {
         return localizacaoAtual;
     }
     
     /**
-     * 
      * @return Image: Pega a imagem relaionada ao objeto
-     *  
      */
     public Image getImagem(){
         return imagem;
@@ -37,7 +33,6 @@ public class Item {
 
     /**
      * @param Localizacao Seta a localizacao em que o objeto se encontra
-     *  
      */
     public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
         this.localizacaoAtual = localizacaoAtual;

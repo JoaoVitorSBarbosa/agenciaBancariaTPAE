@@ -17,6 +17,7 @@ import java.util.Random;
 public class Simulacao {
     private static Simulacao singleTon;
 
+    public static int tempoSimulacao;
     private JanelaSimulacao janelaSimulacao;
     private Mapa mapa;
     private Queue<Cliente> filaCliente;
@@ -46,6 +47,7 @@ public class Simulacao {
         gerarFilaClientes(numeroClientes);
 
         janelaSimulacao = new JanelaSimulacao(mapa);
+        tempoSimulacao = 0;
     }
 
     /**
@@ -65,9 +67,9 @@ public class Simulacao {
      */
     private void gerarFilaClientes(int numeroClientes) {
         for (int i = 0; i < numeroClientes; i++) {
-            Cliente cliente = new Cliente(new Localizacao(1, 25 + i), getRandomName(), i, rand.nextInt(8));
+            Cliente cliente = new Cliente(new Localizacao((6+i)-(i/20)*20, 20+(i/20)), getRandomName(), i, rand.nextInt(8)); // gera fila S
             cliente.setLocalizacaoDestino(
-                    new Localizacao(rand.nextInt(mapa.getLargura()), rand.nextInt(mapa.getAltura())));
+                new Localizacao(rand.nextInt(mapa.getLargura()), rand.nextInt(mapa.getAltura())));
             filaCliente.add(cliente);
             mapa.adicionarItem(cliente);
         }
@@ -105,6 +107,7 @@ public class Simulacao {
         do {
             esperar(100);
             executarUmPasso();
+            tempoSimulacao++;
         } while (listaAtendentes.stream().anyMatch(at -> at.getCliente() != null));
     }
 
@@ -118,7 +121,7 @@ public class Simulacao {
             if (at.getCliente() == null) {
                 if (!filaCliente.isEmpty()) {
                     Cliente cliente = filaCliente.poll();
-                    cliente.setLocalizacaoDestino(at.getLocalizacaoAtual());
+                    cliente.setLocalizacaoDestino(new Localizacao(at.getLocalizacaoAtual().getX(),at.getLocalizacaoAtual().getY()+1));
                     at.setCliente(cliente);
                     mapa.removerItem(cliente);
                     cliente.mover();
@@ -131,6 +134,7 @@ public class Simulacao {
                 cliente.mover();
                 mapa.adicionarItem(cliente);
                 if (cliente.getLocalizacaoAtual().equals(cliente.getLocalizacaoDestino())) {
+                    
                     mapa.removerItem(cliente);
                     mapa.adicionarItem(at);
                     at.setCliente(null);
