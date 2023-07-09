@@ -60,6 +60,7 @@ public class Simulacao {
     private Simulacao(int numeroClientes, int numeroAtendentes) {
         rand = new Random();
         mapa = new Mapa();
+        
         filaCliente = new LinkedList<>();
         listaAtendentes = new ArrayList<>();
         criarAtendentes(numeroAtendentes);
@@ -67,6 +68,7 @@ public class Simulacao {
 
         janelaSimulacao = new JanelaSimulacao(mapa);
         tempoSimulacao = 0;
+
     }
 
     /**
@@ -86,7 +88,7 @@ public class Simulacao {
      */
     private void gerarFilaClientes(int numeroClientes) {
         for (int i = 0; i < numeroClientes; i++) {
-            Cliente cliente = new Cliente(new Localizacao((6+i)-(i/20)*20, 20+(i/20)), getRandomName(), i, rand.nextInt(8)); // gera fila S
+            Cliente cliente = new Cliente(new Localizacao((5+i)-(i/20)*20, 15+(i/20)), getRandomName(), 12548+i); // gera fila S
             cliente.setLocalizacaoDestino(null);
             filaCliente.add(cliente);
             mapa.adicionarItem(cliente);
@@ -110,7 +112,7 @@ public class Simulacao {
      */
     private void criarAtendentes(int numeroAtendentes) {
         for (int i = 0; i < numeroAtendentes; i++) {
-            listaAtendentes.add(new Atendente(new Localizacao( (i * 5) + 5, 5), "Ana", 0));
+            listaAtendentes.add(new Atendente(new Localizacao( (i * 3) + 5, 5), "Ana", 0));
             mapa.adicionarItem(listaAtendentes.get(i));
         }
     }
@@ -153,6 +155,7 @@ public class Simulacao {
                     at.atenderCliente(cliente);
                 } else if (at.estaAtendendo()) {
                     if (at.estaLivre(tempoSimulacao)) {
+                        cliente.operaConta();
                         at.encerrarAtendimento();
                         mapa.removerItem(cliente);
                     }

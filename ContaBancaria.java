@@ -12,7 +12,6 @@ public class ContaBancaria {
     /**
      * Construtor da classe ContaBancaria.
      * Cria uma nova instância de ContaBancaria com o número fornecido.
-     * 
      * @param numero O número da conta bancária.
      */
     public ContaBancaria(int numero) {
@@ -26,7 +25,6 @@ public class ContaBancaria {
     
     /**
      * Retorna o número da conta bancária.
-     * 
      * @return O número da conta bancária.
      */
     public int getNumero() {
@@ -35,7 +33,6 @@ public class ContaBancaria {
     
     /**
      * Retorna o saldo da conta bancária.
-     * 
      * @return O saldo da conta bancária.
      */
     public int getSaldo() {
@@ -45,7 +42,6 @@ public class ContaBancaria {
     /**
      * Realiza um depósito na conta bancária.
      * Adiciona o valor fornecido ao saldo da conta.
-     * 
      * @param valor O valor a ser depositado.
      */
     public void depositar(int valor) {
@@ -56,7 +52,6 @@ public class ContaBancaria {
     /**
      * Realiza um saque na conta bancária.
      * Verifica se o saldo é suficiente para o saque e, se sim, subtrai o valor do saldo.
-     * 
      * @param valor O valor a ser sacado.
      */
     public void sacar(int valor) {
