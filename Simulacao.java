@@ -60,7 +60,7 @@ public class Simulacao {
     private Simulacao(int numeroClientes, int numeroAtendentes) {
         rand = new Random();
         mapa = new Mapa();
-        
+
         filaCliente = new LinkedList<>();
         listaAtendentes = new ArrayList<>();
         criarAtendentes(numeroAtendentes);
@@ -112,7 +112,7 @@ public class Simulacao {
      */
     private void criarAtendentes(int numeroAtendentes) {
         for (int i = 0; i < numeroAtendentes; i++) {
-            listaAtendentes.add(new Atendente(new Localizacao( (i * 3) + 5, 5), "Ana", 0));
+            listaAtendentes.add(new Atendente(new Localizacao( (i * 3) + 5, 5), getRandomName()));
             mapa.adicionarItem(listaAtendentes.get(i));
         }
     }
@@ -123,7 +123,7 @@ public class Simulacao {
     public void executarSimulacao() {
         janelaSimulacao.executarAcao();
         do {
-            esperar(100);
+            esperar(200);
             executarUmPasso();
             tempoSimulacao++;
         } while (listaAtendentes.stream().anyMatch(at -> at.getCliente() != null) || !filaCliente.isEmpty());
@@ -141,44 +141,32 @@ public class Simulacao {
                     cliente = filaCliente.poll();
 
                     cliente.setLocalizacaoDestino(new Localizacao(cliente.getLocalizacaoAtual().getX(),cliente.getLocalizacaoAtual().getY()-1));
-                    attSim(cliente);
+                    mapa.atualizarMapa();
                     janelaSimulacao.executarAcao();
 
                     cliente.setLocalizacaoDestino(new Localizacao(at.getLocalizacaoAtual().getX(),at.getLocalizacaoAtual().getY()+1));
                     at.setCliente(cliente);
-                    attSim(cliente);
                 }
             } else {
                 cliente = at.getCliente();
-                attSim(cliente);
                 if (cliente.getLocalizacaoAtual().equals(cliente.getLocalizacaoDestino()) && !at.estaAtendendo()) {
                     at.atenderCliente(cliente);
                 } else if (at.estaAtendendo()) {
                     if (at.estaLivre(tempoSimulacao)) {
                         cliente.operaConta();
-                        at.encerrarAtendimento();
-                        mapa.removerItem(cliente);
+                        at.encerrarAtendimento(cliente);
+                        saiDeCena(cliente);
                     }
                 }
             }
         }
-        for (Cliente c: filaCliente) {
-            mapa.removerItem(c);
-            mapa.adicionarItem(c);
-        }
+        mapa.atualizarMapa();
         janelaSimulacao.executarAcao();
     }
 
-    /**
-     * Atualiza a simulacao com o movimento do cliente
-     * @param cliente
-     */
-    private void attSim(Cliente cliente){
-        mapa.removerItem(cliente);
-        cliente.mover();
-        mapa.adicionarItem(cliente);
+    private void saiDeCena(Cliente cliente){
+        cliente.setLocalizacaoDestino(new Localizacao(cliente.getLocalizacaoAtual().getX()-1, 1));
     }
-
     /**
      * Espera um número de milissegundos especificado.
      *

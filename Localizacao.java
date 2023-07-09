@@ -40,20 +40,9 @@ public class Localizacao {
             int destY = localizacaoDestino.getY();
             int deslocX = x < destX ? 1 : x > destX ? -1 : 0;//Deslocamento de 1 ou 0 ou -1 posição em x
             int deslocY = y < destY ? 1 : y > destY ? -1 : 0;//Deslocamento de 1 ou 0 ou -1 posição em y
-            Localizacao novaLocalizacao;
             
             if(deslocX != 0) return new Localizacao(x + deslocX, y);
-            if(deslocX != 0 && deslocY != 0){//Se nenhuma coordenada coincide com a localizacao destino
-                if(rand.nextInt(2) == 0){//Atualizar x
-                    novaLocalizacao = new Localizacao(x + deslocX, y);
-                }else{//Atualizar y
-                    novaLocalizacao = new Localizacao(x, y + deslocY);
-                }
-            }else{
-                if(deslocX != 0) novaLocalizacao = new Localizacao(x + deslocX, y);
-                else novaLocalizacao = new Localizacao(x, y + deslocY);
-            }
-            return novaLocalizacao;
+            return new Localizacao(x, y + deslocY);
         }
     }
     
@@ -70,7 +59,7 @@ public class Localizacao {
             return false;
         }else{
             Localizacao outro = (Localizacao) obj;
-            return x == outro.x && y == outro.y;
+            return x == outro.getX() && y == outro.getY();
         }
     }
     
@@ -78,10 +67,8 @@ public class Localizacao {
      * @return A representacao da localizacao.
      */
     @Override
-    public String toString()
-    {
+    public String toString(){
         return "(" + x + ", " + y + ")";
     }
-    
-    
 }
+    
