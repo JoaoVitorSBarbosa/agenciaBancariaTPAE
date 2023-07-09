@@ -7,6 +7,7 @@
 public class Atendente extends Pessoa {
     private int horarioLivre;
     private Cliente clienteAtual;
+    private boolean atendendo;
 
     /**
      * Construtor da classe Atendente.
@@ -28,6 +29,7 @@ public class Atendente extends Pessoa {
     public void atenderCliente(Cliente cliente) {
         System.out.println("Atendente: " + getNome() + " está atendendo o cliente: " + cliente.getNome());
         horarioLivre += cliente.getDuracaoAtendimento();
+        atendendo = true;
     }
 
     /**
@@ -52,6 +54,15 @@ public class Atendente extends Pessoa {
      */
     public Cliente getCliente() {
         return clienteAtual;
+    }
+
+    public void encerrarAtendimento() {
+        clienteAtual = null;
+        atendendo = false;
+    }
+
+    public boolean estaAtendendo() {
+        return atendendo;
     }
 
     /**
