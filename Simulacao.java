@@ -29,7 +29,26 @@ public class Simulacao {
         "Pedro",
         "Joao",
         "Luiz",
-        "Maria"
+        "Maria",
+        "Jose",
+        "Carlos",
+        "Paulo",
+        "Lucas",
+        "Marcos",
+        "Mateus",
+        "Luciana",
+        "Mariana",
+        "Juliana",
+        "Fernanda",
+        "Fernando",
+        "Rafael",
+        "Rafaela",
+        "Danilo",
+        "Daniel",
+        "Daniela",
+        "Gabriel",
+        "Gabriela",
+        "Gustavo",
     };
 
     /**
@@ -98,17 +117,15 @@ public class Simulacao {
     }
 
     /**
-     * Executa a simulação por um número específico de passos.
-     *
-     * @param numeroPassos o número de passos a serem executados na simulação
+     * Executa a simulação por até o fim da fila de clientes
      */
-    public void executarSimulacao(int numeroPassos) {
+    public void executarSimulacao() {
         janelaSimulacao.executarAcao();
         do {
             esperar(100);
             executarUmPasso();
             tempoSimulacao++;
-        } while (listaAtendentes.stream().anyMatch(at -> at.getCliente() != null));
+        } while (listaAtendentes.stream().anyMatch(at -> at.getCliente() != null) || !filaCliente.isEmpty());
     }
 
     /**
@@ -121,35 +138,32 @@ public class Simulacao {
             if (at.getCliente() == null) {
                 if (!filaCliente.isEmpty()) {
                     Cliente cliente = filaCliente.poll();
-                    // Executa um passo a frente para evitar colisões
-                    cliente.setLocalizacaoDestino(new Localizacao(cliente.getLocalizacaoAtual().getX(),cliente.getLocalizacaoAtual().getY()-1));
-                    mapa.removerItem(cliente);
-                    cliente.mover();
-                    mapa.adicionarItem(cliente);
-                    janelaSimulacao.executarAcao();
-                    
-                    // Define o destino como a posição a frente do atendente
                     cliente.setLocalizacaoDestino(new Localizacao(at.getLocalizacaoAtual().getX(),at.getLocalizacaoAtual().getY()+1));
                     at.setCliente(cliente);
                     mapa.removerItem(cliente);
                     cliente.mover();
                     mapa.adicionarItem(cliente);
-                    janelaSimulacao.executarAcao();
                 }
             } else {
                 Cliente cliente = at.getCliente();
                 mapa.removerItem(cliente);
                 cliente.mover();
                 mapa.adicionarItem(cliente);
-                if (cliente.getLocalizacaoAtual().equals(cliente.getLocalizacaoDestino())) {
-                    
-                    mapa.removerItem(cliente);
-                    mapa.adicionarItem(at);
-                    at.setCliente(null);
+                if (cliente.getLocalizacaoAtual().equals(cliente.getLocalizacaoDestino()) && !at.estaAtendendo()) {
+                    at.atenderCliente(cliente);
+                } else if (at.estaAtendendo()) {
+                    if (at.estaLivre(tempoSimulacao)) {
+                        at.encerrarAtendimento();
+                        mapa.removerItem(cliente);
+                    }
                 }
-                janelaSimulacao.executarAcao();
             }
         }
+        for (Cliente c: filaCliente) {
+            mapa.removerItem(c);
+            mapa.adicionarItem(c);
+        }
+        janelaSimulacao.executarAcao();
     }
 
     /**
