@@ -121,6 +121,14 @@ public class Simulacao {
             if (at.getCliente() == null) {
                 if (!filaCliente.isEmpty()) {
                     Cliente cliente = filaCliente.poll();
+                    // Executa um passo a frente para evitar colisões
+                    cliente.setLocalizacaoDestino(new Localizacao(cliente.getLocalizacaoAtual().getX(),cliente.getLocalizacaoAtual().getY()-1));
+                    mapa.removerItem(cliente);
+                    cliente.mover();
+                    mapa.adicionarItem(cliente);
+                    janelaSimulacao.executarAcao();
+                    
+                    // Define o destino como a posição a frente do atendente
                     cliente.setLocalizacaoDestino(new Localizacao(at.getLocalizacaoAtual().getX(),at.getLocalizacaoAtual().getY()+1));
                     at.setCliente(cliente);
                     mapa.removerItem(cliente);

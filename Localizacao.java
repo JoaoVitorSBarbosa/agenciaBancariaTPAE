@@ -41,6 +41,8 @@ public class Localizacao {
             int deslocX = x < destX ? 1 : x > destX ? -1 : 0;//Deslocamento de 1 ou 0 ou -1 posição em x
             int deslocY = y < destY ? 1 : y > destY ? -1 : 0;//Deslocamento de 1 ou 0 ou -1 posição em y
             Localizacao novaLocalizacao;
+            
+            if(deslocX != 0) return new Localizacao(x + deslocX, y);
             if(deslocX != 0 && deslocY != 0){//Se nenhuma coordenada coincide com a localizacao destino
                 if(rand.nextInt(2) == 0){//Atualizar x
                     novaLocalizacao = new Localizacao(x + deslocX, y);
