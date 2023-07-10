@@ -35,9 +35,25 @@ public class Mapa {
         itens[item.getLocalizacaoAtual().getX()][item.getLocalizacaoAtual().getY()] = null;
     }
     
-    public void atualizarMapa(Item item){
-        removerItem(item);
-        adicionarItem(item);
+    public void atualizarMapa(){
+        for (Item[] items : itens) {
+            for (Item i : items) {
+                if (i!=null) {
+                    removerItem(i);
+                    if (i instanceof Cliente) {
+                        Cliente aux = (Cliente) i;
+                        aux.mover();
+                    }
+                    adicionarItem(i);
+                }
+                /*if(i instanceof Cliente){
+                    Cliente aux = (Cliente) i;
+                    if(!aux.estaSendoAtendido() && aux.getLocalizacaoAtual().equals(aux.getLocalizacaoDestino())){
+                        removerItem(aux);
+                    }
+                }*/
+            }
+        }
     }
     
     public Item getItem(int x, int y){

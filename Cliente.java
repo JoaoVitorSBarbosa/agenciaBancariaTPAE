@@ -7,6 +7,7 @@ import java.util.Random;
 public class Cliente extends Pessoa{
 
     public static Random rand;
+    private boolean sendoAtendido;
     private int duracaoAtendimento;
     private int operacao;
     private ContaBancaria conta;
@@ -14,6 +15,7 @@ public class Cliente extends Pessoa{
 
     public Cliente(Localizacao localizacao, String nome, int numeroConta) {
         super("cliente", localizacao, nome);
+        sendoAtendido = false;
         localizacaoDestino = null;
         rand = new Random();
 
@@ -40,8 +42,7 @@ public class Cliente extends Pessoa{
      * Move o cliente para a proxima localizacao
      */
     public void mover(){
-        Localizacao destino = getLocalizacaoDestino();
-        if(destino != null){
+        if(getLocalizacaoDestino() != null){
             Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(localizacaoDestino);
             setLocalizacaoAtual(proximaLocalizacao);
         }
@@ -73,6 +74,14 @@ public class Cliente extends Pessoa{
                 break;
             default: break;
         }
+    }
+
+    public boolean estaSendoAtendido(){
+        return sendoAtendido;
+    }
+
+    public void setAtendido(boolean sendoAtendido){
+        this.sendoAtendido = sendoAtendido;
     }
 
     @Override

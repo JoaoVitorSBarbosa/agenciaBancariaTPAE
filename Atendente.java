@@ -16,9 +16,9 @@ public class Atendente extends Pessoa {
      * @param nome o nome do atendente
      * @param horarioAtual o horário em que a simulação se encontra ao criar o objeto
      */
-    public Atendente(Localizacao localizacao, String nome, int horarioAtual) {
+    public Atendente(Localizacao localizacao, String nome) {
         super("atendente", localizacao, nome);
-        horarioLivre = horarioAtual;
+        horarioLivre = 0;
         atendendo = false;
     }
 
@@ -31,6 +31,7 @@ public class Atendente extends Pessoa {
         System.out.println("Atendente: " + getNome() + " está atendendo o cliente: " + cliente.getNome());
         horarioLivre += cliente.getDuracaoAtendimento();
         atendendo = true;
+        cliente.setAtendido(true);
     }
 
     /**
@@ -57,7 +58,8 @@ public class Atendente extends Pessoa {
         return clienteAtual;
     }
 
-    public void encerrarAtendimento() {
+    public void encerrarAtendimento(Cliente cliente) {
+        cliente.setAtendido(false);
         clienteAtual = null;
         atendendo = false;
     }
