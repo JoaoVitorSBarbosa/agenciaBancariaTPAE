@@ -25,7 +25,7 @@ public class Item {
     }
     
     /**
-     * @return Image: Pega a imagem relaionada ao objeto
+     * @return Image: Pega a imagem relacionada ao objeto
      */
     public Image getImagem(){
         return imagem;
