@@ -78,7 +78,10 @@ public class Simulacao {
      * @param numeroAtendentes
      */
     public static Simulacao getInstanceSimulacao(int numeroClientes, int numeroAtendentes){
-        return (singleTon==null) ? new Simulacao(numeroClientes, numeroAtendentes) : singleTon;
+        if (singleTon == null){
+            singleTon = new Simulacao(numeroClientes, numeroAtendentes);
+            return singleTon;
+        } return singleTon;
     }
 
     /**
