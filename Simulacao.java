@@ -191,7 +191,7 @@ public class Simulacao {
     public void executarSimulacao() {
         janelaSimulacao.executarAcao();
         do {
-            esperar(200);
+            esperar(100);
             executarUmPasso();
             tempoSimulacao++;
         } while (listaAtendentes.stream().anyMatch(at -> at.getCliente() != null) || !filaCliente.isEmpty());

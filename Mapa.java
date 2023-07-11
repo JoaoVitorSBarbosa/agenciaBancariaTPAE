@@ -43,12 +43,17 @@ public class Mapa {
                     if (i instanceof Cliente) {
                         Cliente aux = (Cliente) i;
                         aux.mover();
+                        if (!aux.foiAtendido() || aux.getLocalizacaoAtual().getY()!=1) {
+                            adicionarItem(aux);
+                        }
+                    } else {
+                        adicionarItem(i);
                     }
-                    adicionarItem(i);
                 }
             }
         }
     }
+    
     
     public Item getItem(int x, int y){
         return itens[x][y];
