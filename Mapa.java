@@ -43,7 +43,7 @@ public class Mapa {
                     if (i instanceof Cliente) {
                         Cliente aux = (Cliente) i;
                         aux.mover();
-                        if (!aux.foiAtendido() || aux.getLocalizacaoAtual().getY()!=1) {
+                        if(aux.getLocalizacaoAtual().getY()!=1){
                             adicionarItem(aux);
                         }
                     } else {
@@ -53,7 +53,6 @@ public class Mapa {
             }
         }
     }
-    
     
     public Item getItem(int x, int y){
         return itens[x][y];
