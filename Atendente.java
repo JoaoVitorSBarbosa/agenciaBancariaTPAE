@@ -31,7 +31,6 @@ public class Atendente extends Pessoa {
         System.out.println("Atendente: " + getNome() + " está atendendo o cliente: " + cliente.getNome());
         horarioLivre += cliente.getDuracaoAtendimento();
         atendendo = true;
-        cliente.setAtendido(true);
     }
 
     /**
@@ -59,7 +58,7 @@ public class Atendente extends Pessoa {
     }
 
     public void encerrarAtendimento(Cliente cliente) {
-        cliente.setAtendido(false);
+        cliente.setAtendido(true);
         clienteAtual = null;
         atendendo = false;
     }

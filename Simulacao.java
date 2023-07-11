@@ -87,8 +87,8 @@ public class Simulacao {
      * @param numeroClientes o número de clientes a serem gerados
      */
     private void gerarFilaClientes(int numeroClientes) {
-        for (int i = 0; i < numeroClientes; i++) {
-            Cliente cliente = new Cliente(new Localizacao((5+i)-(i/20)*20, 15+(i/20)), getRandomName(), 12548+i); // gera fila S
+        for (int i = 0; i < numeroClientes; i+=2) {
+            Cliente cliente = new Cliente(new Localizacao((5+i)-(i/26)*26, 15+((i/26)*2)), getRandomName(), 12548+i); // gera fila S
             cliente.setLocalizacaoDestino(null);
             filaCliente.add(cliente);
             mapa.adicionarItem(cliente);
@@ -123,7 +123,7 @@ public class Simulacao {
     public void executarSimulacao() {
         janelaSimulacao.executarAcao();
         do {
-            esperar(200);
+            esperar(100);
             executarUmPasso();
             tempoSimulacao++;
         } while (listaAtendentes.stream().anyMatch(at -> at.getCliente() != null) || !filaCliente.isEmpty());
