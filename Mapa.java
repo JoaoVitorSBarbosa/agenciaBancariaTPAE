@@ -20,6 +20,7 @@ public class Mapa {
         this.altura = altura;
         itens = new Item[altura][largura];
     }
+
     /**
      * Cria mapa com tamanho padrao.
      */
@@ -27,14 +28,25 @@ public class Mapa {
         this(LARGURA_PADRAO,ALTURA_PADRAO);
     }
     
+    /**
+     * Adiciona objeto Item ao mapa
+     * @param Item a ser adicionado
+     */
     public void adicionarItem(Item item){
         itens[item.getLocalizacaoAtual().getX()][item.getLocalizacaoAtual().getY()] = item;
     }
     
+    /**
+     * Remove objeto Item ao mapa
+     * @param Item a ser removido
+     */
     public void removerItem(Item item){
         itens[item.getLocalizacaoAtual().getX()][item.getLocalizacaoAtual().getY()] = null;
     }
     
+    /**
+     * Método que atualiza o mapa com as novas posicoes
+     */
     public void atualizarMapa(){
         for (Item[] items : itens) {
             for (Item i : items) {
@@ -54,14 +66,26 @@ public class Mapa {
         }
     }
     
+    /**
+     * Metódo que retorna um item em uma posição x,y caso solicitado
+     * @param x
+     * @param y
+     * @return Item na posição [x][y] do mapa
+     */
     public Item getItem(int x, int y){
         return itens[x][y];
     }
 
+    /**
+     * @return largura do mapa
+     */
     public int getLargura() {
         return largura;
     }
 
+    /**
+     * @return altura do mapa
+     */
     public int getAltura() {
         return altura;
     }

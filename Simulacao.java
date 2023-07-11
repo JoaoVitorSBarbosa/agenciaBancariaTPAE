@@ -55,7 +55,6 @@ public class Simulacao {
 
     /**
      * Construtor da classe Simulacao.
-     *
      * @param numeroClientes   o número de clientes a serem gerados na simulação
      * @param numeroAtendentes o número de atendentes a serem criados na simulação
      */
@@ -90,7 +89,6 @@ public class Simulacao {
 
     /**
      * Gera a fila de clientes para a simulação.
-     *
      * @param numeroClientes o número de clientes a serem gerados
      */
     private void gerarFilaClientes() {
@@ -98,8 +96,7 @@ public class Simulacao {
 
         for (int i = 0; i < numeroClientes; i++) {
             proximaLocalizacao = getProximoLugarFila(proximaLocalizacao);
-            Cliente cliente = new Cliente(new Localizacao(proximaLocalizacao.getX(), proximaLocalizacao.getY()),
-                    getRandomName(), 12548 + i); // gera fila S
+            Cliente cliente = new Cliente(new Localizacao(proximaLocalizacao.getX(), proximaLocalizacao.getY()),getRandomName(), 12548 + i); // gera fila S
             cliente.setLocalizacaoDestino(null);
             filaCliente.add(cliente);
             mapa.adicionarItem(cliente);
@@ -108,7 +105,6 @@ public class Simulacao {
 
     /**
      * Obtém um nome de cliente aleatório da matriz de nomes de clientes.
-     * 
      * @return um nome de cliente aleatório.
      */
     private String getRandomName() {
@@ -118,7 +114,6 @@ public class Simulacao {
 
     /**
      * Cria os atendentes para a simulação.
-     *
      * @param numeroAtendentes o número de atendentes a serem criados
      */
     private void criarAtendentes(int numeroAtendentes) {
@@ -127,6 +122,11 @@ public class Simulacao {
             mapa.adicionarItem(listaAtendentes.get(i));
         }
     }
+
+    /**
+     * Método para construção das paredes do ambiente
+     * @param numero de cabines a serem implementadas
+     */
     private void gerarParedes(int numeroCabines) {
         for (int i = 7; i <= mapa.getAltura() - 20; i++) {
             mapa.adicionarItem(new Item("quadropreto", new Localizacao(4, i)));
@@ -148,6 +148,11 @@ public class Simulacao {
             }
         }  
     }
+
+    /**
+     * Método responsável por gerar itens inanimados  do cenário
+     * @param numero de cabines a serem implementadas
+     */
     private void gerarCenario(int numeroCabines) {
         criarAtendentes(numeroCabines);
         for (int i = 0; i < numeroCabines; i++) {
@@ -161,6 +166,10 @@ public class Simulacao {
         gerarSeparadores(numeroCabines);
     }
 
+    /**
+     * Método para alocar os separadores da fila
+     * @param numero de cabines a serem implementadas
+     */
     private void gerarSeparadores(int numeroCabines) {
         for(int i = 0; i < 18; i++) {
             for(int j = mapa.getLargura() - 1; j >= mapa.getLargura() - 1  - ((numeroReparticoes * 2) + 1); j--) {
@@ -170,6 +179,12 @@ public class Simulacao {
             }
         }
     }
+
+    /**
+     * Método que retorna a localização do próximo lugar da fila
+     * @param localizacaoAtual
+     * @return Localização - proximo lugar da fila. Posição inicial se localização atual é null
+     */
     private Localizacao getProximoLugarFila(Localizacao localizacaoAtual) {
         int primeiraPos = mapa.getAltura() - 21;
         int yPos = primeiraPos;
@@ -211,8 +226,7 @@ public class Simulacao {
                     cliente = filaCliente.poll();
                     Localizacao cliAux = cliente.getLocalizacaoAtual();
                     Localizacao proxLocalizacao;
-                    cliente.setLocalizacaoDestino(
-                            new Localizacao(at.getLocalizacaoAtual().getX(), at.getLocalizacaoAtual().getY() + 1));
+                    cliente.setLocalizacaoDestino(new Localizacao(at.getLocalizacaoAtual().getX(), at.getLocalizacaoAtual().getY() + 1));
                     mapa.atualizarMapa();
                     janelaSimulacao.executarAcao();
 
@@ -242,7 +256,6 @@ public class Simulacao {
 
     /**
      * Espera um número de milissegundos especificado.
-     *
      * @param milisegundos o número de milissegundos a serem esperados
      */
     private void esperar(int milisegundos) {

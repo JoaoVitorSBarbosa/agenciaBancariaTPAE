@@ -5,23 +5,23 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann and Pedro Ernesto
  */
 public class Cliente extends Pessoa{
-
     public static Random rand;
-    private int duracaoAtendimento;
-    private int operacao;
+    private static int id=0;
+
     private ContaBancaria conta;
     private Localizacao localizacaoDestino;
-    private static int id;
+    private int duracaoAtendimento;
+    private int operacao;
     private int userId;
 
     public Cliente(Localizacao localizacao, String nome, int numeroConta) {
         super("cliente", localizacao, nome);
-        localizacaoDestino = null;
         rand = new Random();
-
         conta = new ContaBancaria(numeroConta,rand.nextInt(100,2000));
-        operacao = rand.nextInt(2);
+        localizacaoDestino = null;
+        
         duracaoAtendimento = rand.nextInt(50,80);
+        operacao = rand.nextInt(2);
         userId = id;
         id++;
     }
@@ -77,11 +77,15 @@ public class Cliente extends Pessoa{
             default: break;
         }
     }
+    
     @Override
     public String toString() {
         return super.toString() + "\n:Numero conta " + conta.getNumero() + "\nSaldo: "+ conta.getSaldo();
     }
 
+    /**
+     * @return Código identificador do usuário
+     */
     public int getId() {
         return userId;
     }

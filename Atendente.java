@@ -1,8 +1,8 @@
 /**
  * Classe que representa um atendente.
- * 
  * @author João Vitor
  * @author Ana Clara
+ * @author Pedro Ernesto
  */
 public class Atendente extends Pessoa {
     private int horarioLivre;
@@ -10,7 +10,6 @@ public class Atendente extends Pessoa {
 
     /**
      * Construtor da classe Atendente.
-     * 
      * @param localizacao a localização do atendente
      * @param nome o nome do atendente
      * @param horarioAtual o horário em que a simulação se encontra ao criar o objeto
@@ -22,7 +21,6 @@ public class Atendente extends Pessoa {
 
     /**
      * Realiza o atendimento de um cliente, definindo o horário em que o atendente estará livre.
-     * 
      * @param cliente o cliente a ser atendido
      */
     public void atenderCliente(Cliente cliente) {
@@ -33,7 +31,6 @@ public class Atendente extends Pessoa {
 
     /**
      * Verifica se o atendente está livre em um determinado tempo.
-     * 
      * @param tempoAtual o tempo atual da simulação
      * @return true se o atendente está livre, false caso contrário
      */
@@ -48,21 +45,24 @@ public class Atendente extends Pessoa {
 
     /**
      * Obtém o cliente atualmente sendo atendido pelo atendente.
-     * 
      * @return o cliente atual
      */
     public Cliente getCliente() {
         return clienteAtual;
     }
+
     /**
      * Define o cliente a ser atendido pelo atendente.
-     * 
      * @param clienteAtual o cliente atual
      */
     public void setCliente(Cliente clienteAtual) {
         this.clienteAtual = clienteAtual;
     }
 
+    /**
+     * Indica qual horário o atendente estará livre
+     * @return
+     */
     public int getHorarioLivre() {
         return horarioLivre;
     }
