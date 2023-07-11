@@ -82,15 +82,10 @@ public class Simulacao {
      * @param numeroClientes
      * @param numeroAtendentes
      */
-<<<<<<< HEAD
     public static Simulacao getInstanceSimulacao(int numeroClientes, int numeroAtendentes){
         if (singleTon == null){
             singleTon = new Simulacao(numeroClientes, numeroAtendentes);
         } return singleTon;
-=======
-    public static Simulacao getInstanceSimulacao(int numeroClientes, int numeroAtendentes) {
-        return (singleTon == null) ? new Simulacao(numeroClientes, numeroAtendentes) : singleTon;
->>>>>>> 95dcbe2caffcb8c9de030de6fd7f6d87ddce2e59
     }
 
     /**
