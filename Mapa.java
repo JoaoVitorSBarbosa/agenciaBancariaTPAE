@@ -46,12 +46,6 @@ public class Mapa {
                     }
                     adicionarItem(i);
                 }
-                /*if(i instanceof Cliente){
-                    Cliente aux = (Cliente) i;
-                    if(!aux.estaSendoAtendido() && aux.getLocalizacaoAtual().equals(aux.getLocalizacaoDestino())){
-                        removerItem(aux);
-                    }
-                }*/
             }
         }
     }

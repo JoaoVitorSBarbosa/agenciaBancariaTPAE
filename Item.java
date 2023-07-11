@@ -37,7 +37,6 @@ public class Item {
     public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
         this.localizacaoAtual = localizacaoAtual;
     }
-
     @Override
     public String toString() {
         return "Item: " + descricao + "\n";

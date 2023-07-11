@@ -7,7 +7,6 @@
 public class Atendente extends Pessoa {
     private int horarioLivre;
     private Cliente clienteAtual;
-    private boolean atendendo;
 
     /**
      * Construtor da classe Atendente.
@@ -19,7 +18,6 @@ public class Atendente extends Pessoa {
     public Atendente(Localizacao localizacao, String nome) {
         super("atendente", localizacao, nome);
         horarioLivre = 0;
-        atendendo = false;
     }
 
     /**
@@ -28,10 +26,9 @@ public class Atendente extends Pessoa {
      * @param cliente o cliente a ser atendido
      */
     public void atenderCliente(Cliente cliente) {
-        System.out.println("Atendente: " + getNome() + " está atendendo o cliente: " + cliente.getNome());
+        System.out.println("Atendente: " + getNome() + " está atendendo o cliente: " + cliente.getId());
+        cliente.operaConta();
         horarioLivre += cliente.getDuracaoAtendimento();
-        atendendo = true;
-        cliente.setAtendido(true);
     }
 
     /**
@@ -57,17 +54,6 @@ public class Atendente extends Pessoa {
     public Cliente getCliente() {
         return clienteAtual;
     }
-
-    public void encerrarAtendimento(Cliente cliente) {
-        cliente.setAtendido(false);
-        clienteAtual = null;
-        atendendo = false;
-    }
-
-    public boolean estaAtendendo() {
-        return atendendo;
-    }
-
     /**
      * Define o cliente a ser atendido pelo atendente.
      * 
@@ -75,5 +61,9 @@ public class Atendente extends Pessoa {
      */
     public void setCliente(Cliente clienteAtual) {
         this.clienteAtual = clienteAtual;
+    }
+
+    public int getHorarioLivre() {
+        return horarioLivre;
     }
 }

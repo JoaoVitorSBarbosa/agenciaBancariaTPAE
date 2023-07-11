@@ -8,7 +8,8 @@ import java.util.Random;
  * Responsável pela simulação.
  * Descrição detalhada da classe e suas funcionalidades.
  * 
- * Este código é baseado em um trabalho anterior de David J. Barnes, Michael Kolling,
+ * Este código é baseado em um trabalho anterior de David J. Barnes, Michael
+ * Kolling,
  * Luiz Merschmann, João Barbosa, Pedro Ernesto e Ana Clara.
  * 
  * @author David J. Barnes
@@ -23,32 +24,33 @@ public class Simulacao {
     private Queue<Cliente> filaCliente;
     private List<Atendente> listaAtendentes;
     private Random rand;
-
+    private int numeroClientes;
+    private int numeroReparticoes;
     private static String[] nomesClientes = {
-        "Ana",
-        "Pedro",
-        "Joao",
-        "Luiz",
-        "Maria",
-        "Jose",
-        "Carlos",
-        "Paulo",
-        "Lucas",
-        "Marcos",
-        "Mateus",
-        "Luciana",
-        "Mariana",
-        "Juliana",
-        "Fernanda",
-        "Fernando",
-        "Rafael",
-        "Rafaela",
-        "Danilo",
-        "Daniel",
-        "Daniela",
-        "Gabriel",
-        "Gabriela",
-        "Gustavo",
+            "Ana",
+            "Pedro",
+            "Joao",
+            "Luiz",
+            "Maria",
+            "Jose",
+            "Carlos",
+            "Paulo",
+            "Lucas",
+            "Marcos",
+            "Mateus",
+            "Luciana",
+            "Mariana",
+            "Juliana",
+            "Fernanda",
+            "Fernando",
+            "Rafael",
+            "Rafaela",
+            "Danilo",
+            "Daniel",
+            "Daniela",
+            "Gabriel",
+            "Gabriela",
+            "Gustavo",
     };
 
     /**
@@ -60,11 +62,13 @@ public class Simulacao {
     private Simulacao(int numeroClientes, int numeroAtendentes) {
         rand = new Random();
         mapa = new Mapa();
-
+        this.numeroClientes = numeroClientes;
+        numeroReparticoes = numeroClientes / 20;
         filaCliente = new LinkedList<>();
         listaAtendentes = new ArrayList<>();
-        criarAtendentes(numeroAtendentes);
-        gerarFilaClientes(numeroClientes);
+        gerarCenario(numeroAtendentes);
+
+        gerarFilaClientes();
 
         janelaSimulacao = new JanelaSimulacao(mapa);
         tempoSimulacao = 0;
@@ -72,13 +76,14 @@ public class Simulacao {
     }
 
     /**
-     * Método que retorna a instância única garantida pelo padrão de projeto Singleton
+     * Método que retorna a instância única garantida pelo padrão de projeto
+     * Singleton
      * 
      * @param numeroClientes
      * @param numeroAtendentes
      */
-    public static Simulacao getInstanceSimulacao(int numeroClientes, int numeroAtendentes){
-        return (singleTon==null) ? new Simulacao(numeroClientes, numeroAtendentes) : singleTon;
+    public static Simulacao getInstanceSimulacao(int numeroClientes, int numeroAtendentes) {
+        return (singleTon == null) ? new Simulacao(numeroClientes, numeroAtendentes) : singleTon;
     }
 
     /**
@@ -86,9 +91,13 @@ public class Simulacao {
      *
      * @param numeroClientes o número de clientes a serem gerados
      */
-    private void gerarFilaClientes(int numeroClientes) {
+    private void gerarFilaClientes() {
+        Localizacao proximaLocalizacao = null;
+
         for (int i = 0; i < numeroClientes; i++) {
-            Cliente cliente = new Cliente(new Localizacao((5+i)-(i/20)*20, 15+(i/20)), getRandomName(), 12548+i); // gera fila S
+            proximaLocalizacao = getProximoLugarFila(proximaLocalizacao);
+            Cliente cliente = new Cliente(new Localizacao(proximaLocalizacao.getX(), proximaLocalizacao.getY()),
+                    getRandomName(), 12548 + i); // gera fila S
             cliente.setLocalizacaoDestino(null);
             filaCliente.add(cliente);
             mapa.adicionarItem(cliente);
@@ -112,9 +121,68 @@ public class Simulacao {
      */
     private void criarAtendentes(int numeroAtendentes) {
         for (int i = 0; i < numeroAtendentes; i++) {
-            listaAtendentes.add(new Atendente(new Localizacao( (i * 3) + 5, 5), getRandomName()));
+            listaAtendentes.add(new Atendente(new Localizacao(mapa.getLargura() - ((i * 3) + 5), 5), getRandomName()));
             mapa.adicionarItem(listaAtendentes.get(i));
         }
+    }
+    private void gerarParedes(int numeroCabines) {
+        for (int i = 7; i <= mapa.getAltura() - 20; i++) {
+            mapa.adicionarItem(new Item("quadropreto", new Localizacao(4, i)));
+        }
+        for (int i = mapa.getAltura() - 20; i < mapa.getAltura(); i++) {
+            for (int j = 4; j < (mapa.getLargura() - ((numeroReparticoes) * 2)) - 2; j++) {
+                mapa.adicionarItem(new Item("quadropreto", new Localizacao(j, i)));
+            }
+        }
+        for (int i = ((mapa.getLargura() - ((numeroReparticoes) * 2)) - 2); i < mapa.getLargura(); i++) {
+            mapa.adicionarItem(new Item("quadropreto", new Localizacao(i, mapa.getAltura()-1)));
+        }
+        for (int i = 0; i < mapa.getAltura(); i++) {
+            mapa.adicionarItem(new Item("quadropreto", new Localizacao(mapa.getLargura() - 1, i)));
+        }
+        for (int i = 0; i <= mapa.getAltura() - 23; i++) {
+            for (int j = 1; j <= mapa.getLargura() - ((numeroCabines * 3)+4); j++) {
+                mapa.adicionarItem(new Item("quadropreto", new Localizacao(mapa.getLargura() - j,i)));
+            }
+        }  
+    }
+    private void gerarCenario(int numeroCabines) {
+        criarAtendentes(numeroCabines);
+        for (int i = 0; i < numeroCabines; i++) {
+            mapa.adicionarItem(new Item("policial", new Localizacao((i * 3) + 6, 1)));
+            mapa.adicionarItem(new Item("saida", new Localizacao((i * 3) + 4, 0)));
+            for (int j = 1; j <= 6; j++) {
+                mapa.adicionarItem(new Item("quadropreto", new Localizacao((i * 3) + 4, j)));
+            }
+        }
+        gerarParedes(numeroCabines);
+        gerarSeparadores(numeroCabines);
+    }
+
+    private void gerarSeparadores(int numeroCabines) {
+        for(int i = 0; i < 18; i++) {
+            for(int j = mapa.getLargura() - 1; j >= mapa.getLargura() - 1  - ((numeroReparticoes * 2) + 1); j--) {
+                if(((mapa.getLargura() - 1) - j) % 2 != 0) {
+                    mapa.adicionarItem(new Item("separadorV", new Localizacao(j, (mapa.getAltura() - 3) - i)));
+                }
+            }
+        }
+    }
+    private Localizacao getProximoLugarFila(Localizacao localizacaoAtual) {
+        int primeiraPos = mapa.getAltura() - 21;
+        int yPos = primeiraPos;
+        int xPos = (mapa.getLargura() - ((numeroReparticoes) * 2)) - 1;
+
+        if (localizacaoAtual != null) {
+            if (localizacaoAtual.getY() == primeiraPos + 19) {
+                xPos = localizacaoAtual.getX() + 2;
+                yPos = primeiraPos;
+            } else {
+                yPos = localizacaoAtual.getY() + 1;
+                xPos = localizacaoAtual.getX();
+            }
+        }
+        return new Localizacao(xPos, yPos);
     }
 
     /**
@@ -135,38 +203,41 @@ public class Simulacao {
      */
     private void executarUmPasso() {
         Cliente cliente;
-        for (Atendente at: listaAtendentes) {
-            if (at.getCliente()==null) {
+        for (Atendente at : listaAtendentes) {
+            if (at.getCliente() == null) {
                 if (!filaCliente.isEmpty()) {
                     cliente = filaCliente.poll();
-
-                    cliente.setLocalizacaoDestino(new Localizacao(cliente.getLocalizacaoAtual().getX(),cliente.getLocalizacaoAtual().getY()-1));
+                    Localizacao cliAux = cliente.getLocalizacaoAtual();
+                    Localizacao proxLocalizacao;
+                    cliente.setLocalizacaoDestino(
+                            new Localizacao(at.getLocalizacaoAtual().getX(), at.getLocalizacaoAtual().getY() + 1));
                     mapa.atualizarMapa();
                     janelaSimulacao.executarAcao();
 
-                    cliente.setLocalizacaoDestino(new Localizacao(at.getLocalizacaoAtual().getX(),at.getLocalizacaoAtual().getY()+1));
-                    at.setCliente(cliente);
-                }
-            } else {
-                cliente = at.getCliente();
-                if (cliente.getLocalizacaoAtual().equals(cliente.getLocalizacaoDestino()) && !at.estaAtendendo()) {
-                    at.atenderCliente(cliente);
-                } else if (at.estaAtendendo()) {
-                    if (at.estaLivre(tempoSimulacao)) {
-                        cliente.operaConta();
-                        at.encerrarAtendimento(cliente);
-                        saiDeCena(cliente);
+                    for (Cliente cli : filaCliente) {
+                        mapa.removerItem(cli);
+                        proxLocalizacao = cli.getLocalizacaoAtual();
+                        cli.setLocalizacaoAtual(new Localizacao(cliAux.getX(), cliAux.getY()));
+                        mapa.adicionarItem(cli);
+                        cliAux = proxLocalizacao;
                     }
+
+                    at.setCliente(cliente);
+                    at.atenderCliente(cliente);
+
                 }
+            } else if (at.getHorarioLivre() - tempoSimulacao == 0) {
+                cliente = at.getCliente();
+                cliente.setLocalizacaoDestino(new Localizacao(cliente.getLocalizacaoAtual().getX() - 1, 1));
+                mapa.atualizarMapa();
+                janelaSimulacao.executarAcao();
+                at.setCliente(null);
             }
         }
         mapa.atualizarMapa();
         janelaSimulacao.executarAcao();
     }
 
-    private void saiDeCena(Cliente cliente){
-        cliente.setLocalizacaoDestino(new Localizacao(cliente.getLocalizacaoAtual().getX()-1, 1));
-    }
     /**
      * Espera um número de milissegundos especificado.
      *

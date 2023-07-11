@@ -7,21 +7,23 @@ import java.util.Random;
 public class Cliente extends Pessoa{
 
     public static Random rand;
-    private boolean sendoAtendido;
     private int duracaoAtendimento;
     private int operacao;
     private ContaBancaria conta;
     private Localizacao localizacaoDestino;
+    private static int id;
+    private int userId;
 
     public Cliente(Localizacao localizacao, String nome, int numeroConta) {
         super("cliente", localizacao, nome);
-        sendoAtendido = false;
         localizacaoDestino = null;
         rand = new Random();
 
         conta = new ContaBancaria(numeroConta,rand.nextInt(100,2000));
         operacao = rand.nextInt(2);
         duracaoAtendimento = rand.nextInt(50,80);
+        userId = id;
+        id++;
     }
 
     /**
@@ -75,17 +77,12 @@ public class Cliente extends Pessoa{
             default: break;
         }
     }
-
-    public boolean estaSendoAtendido(){
-        return sendoAtendido;
-    }
-
-    public void setAtendido(boolean sendoAtendido){
-        this.sendoAtendido = sendoAtendido;
-    }
-
     @Override
     public String toString() {
         return super.toString() + "\n:Numero conta " + conta.getNumero() + "\nSaldo: "+ conta.getSaldo();
+    }
+
+    public int getId() {
+        return userId;
     }
 }
