@@ -77,7 +77,9 @@ public class Cliente extends Pessoa{
             default: break;
         }
     }
-    
+    /*
+     * Retorna uma String com os estados dos atributos das classes
+     */
     @Override
     public String toString() {
         return super.toString() + "\n:Numero conta " + conta.getNumero() + "\nSaldo: "+ conta.getSaldo();

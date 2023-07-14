@@ -45,7 +45,7 @@ public class Mapa {
     }
     
     /**
-     * Método que atualiza o mapa com as novas posicoes
+     * Método que atualiza o mapa com as novas posicoes dos Itens
      */
     public void atualizarMapa(){
         for (Item[] items : itens) {

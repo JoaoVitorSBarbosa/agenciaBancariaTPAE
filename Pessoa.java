@@ -27,7 +27,9 @@ public abstract class Pessoa extends Item{
     public String getNome() {
         return nome;
     }
-
+    /*
+     * Retorna uma String com os estados dos atributos das classes
+     */
     @Override
     public String toString() {
         return super.toString() + "Nome: " + nome;

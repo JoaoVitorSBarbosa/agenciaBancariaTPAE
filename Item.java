@@ -37,6 +37,9 @@ public class Item {
     public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
         this.localizacaoAtual = localizacaoAtual;
     }
+    /*
+     * Retorna uma String com os estados dos atributos das classes
+     */
     @Override
     public String toString() {
         return "Item: " + descricao + "\n";
