@@ -1,3 +1,4 @@
+package br.ufla.gac111.grupo1;
 /**
  * Essa é a classe ContaBancaria, que representa uma conta bancária básica.
  * Descrição detalhada da classe e suas funcionalidades.

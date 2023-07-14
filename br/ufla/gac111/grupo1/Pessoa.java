@@ -1,3 +1,4 @@
+package br.ufla.gac111.grupo1;
 /**
  * Essa é a classe Pessoa, que representa uma pessoa genérica.
  * Descrição detalhada da classe e suas funcionalidades.

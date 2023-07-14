@@ -1,3 +1,4 @@
+package br.ufla.gac111.grupo1;
 /**
  * Representa uma localização no mapa
  * @author David J. Barnes and Michael Kolling, Luiz Merschmann and Pedro Ernesto

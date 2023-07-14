@@ -1,3 +1,4 @@
+package br.ufla.gac111.grupo1;
 /**
  * Classe que representa um atendente.
  * @author João Vitor
