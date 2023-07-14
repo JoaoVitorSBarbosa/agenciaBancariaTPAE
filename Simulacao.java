@@ -26,7 +26,7 @@ public class Simulacao {
     private Random rand;
     private int numeroClientes;
     private int numeroReparticoes;
-    private static String[] nomesClientes = {
+    private static String[] nomes = {
             "Ana",
             "Pedro",
             "Joao",
@@ -108,8 +108,8 @@ public class Simulacao {
      * @return um nome de cliente aleatório.
      */
     private String getRandomName() {
-        int randomIndex = rand.nextInt(nomesClientes.length);
-        return nomesClientes[randomIndex];
+        int randomIndex = rand.nextInt(nomes.length);
+        return nomes[randomIndex];
     }
 
     /**
